@@ -1,0 +1,24 @@
+Vagrant::Config.run do |config|
+
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  config.vm.box = "precise64"
+
+  config.vm.forward_port 80, 8080
+
+  config.vm.provision :chef_solo do |chef|
+    chef.cookbooks_path = "cookbooks"
+    chef.add_recipe "morgue::demo"
+    chef.json = {
+      :mysql => {
+        :server_debian_password => "mysqlpasswd",
+        :server_root_password => "mysqlpasswd",
+        :server_repl_password => "mysqlpasswd"
+        },
+      :morgue => {
+      	:dbuser => 'root',
+        :dbpasswd => "mysqlpasswd"
+        }
+      }
+  end
+
+end

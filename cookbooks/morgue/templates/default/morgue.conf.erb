@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+  ServerName localhost
+
+  DocumentRoot /var/www/morgue
+
+  <Directory /var/www/morgue>
+    AllowOverride All
+  </Directory>
+
+  SetEnv MORGUE_ENVIRONMENT production
+
+  php_value include_path ".:/usr/share/pear:./features"
+</VirtualHost>
